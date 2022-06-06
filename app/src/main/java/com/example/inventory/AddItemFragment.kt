@@ -8,13 +8,11 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.inventory.data.InventoryViewModel
 import com.example.inventory.data.Item
 import com.example.inventory.databinding.FragmentAddItemBinding
-import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Fragment to add or update an item in the Inventory database.
