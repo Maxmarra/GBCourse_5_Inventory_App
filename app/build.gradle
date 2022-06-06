@@ -3,16 +3,17 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.example.inventory"
-        minSdkVersion 19
-        targetSdkVersion 31
+        minSdkVersion 23
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
 

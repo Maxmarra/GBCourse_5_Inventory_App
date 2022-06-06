@@ -45,4 +45,11 @@ class InventoryViewModel @Inject constructor(
         insertItem(newItem)
     }
 
+    fun isEntryValid(itemName: String, itemPrice: String, itemCount: String): Boolean {
+        if (itemName.isBlank() || itemPrice.isBlank() || itemCount.isBlank()) {
+            return false
+        }
+        return true
+    }
+
 }
