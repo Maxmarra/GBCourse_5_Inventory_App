@@ -20,12 +20,13 @@ object AppModule {
             ItemRoomDatabase::class.java,
             "item_database"
         ).fallbackToDestructiveMigration()
-            .build()
+         .build()
     }
 
     @Provides
     @Singleton
-    fun provideItemRepository(db: ItemRoomDatabase): ItemRepository {
+    fun provideItemRepository(db: ItemRoomDatabase):
+            ItemRepository {
         return ItemRepositoryImpl(db.dao)
     }
 }

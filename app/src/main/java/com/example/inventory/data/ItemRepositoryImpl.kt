@@ -2,7 +2,8 @@ package com.example.inventory.data
 
 import kotlinx.coroutines.flow.Flow
 
-class ItemRepositoryImpl(private val daoImpl:ItemDao): ItemRepository{
+class ItemRepositoryImpl(private val daoImpl:ItemDao)
+    : ItemRepository{
 
     override suspend fun insertRepo(item: Item) {
         daoImpl.insertDao(item)
