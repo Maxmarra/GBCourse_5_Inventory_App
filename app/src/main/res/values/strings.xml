@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Inventory</string>
+    <string name="app_name">Учет.Даггер.Хилт</string>
     <string name="sell">Sell</string>
     <string name="quantity">Quantity in Stock:</string>
     <string name="quantity_req">Quantity in Stock <font color='#FF0000'>*</font></string>

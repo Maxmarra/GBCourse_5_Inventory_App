@@ -54,4 +54,8 @@ class InventoryViewModel @Inject constructor(
         return true
     }
 
+    fun retrieveItem(id: Int): LiveData<Item> {
+        return repository.getItemRepo(id).asLiveData()
+    }
+
 }
