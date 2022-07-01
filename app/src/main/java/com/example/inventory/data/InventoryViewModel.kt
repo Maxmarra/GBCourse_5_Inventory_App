@@ -20,10 +20,33 @@ class InventoryViewModel @Inject constructor(
             repository.insertRepo(item)
         }
     }
-    /* ЭМУЛЯЦИЯ ПОЛУЧЕНИЯ И ДОБАВЛЕНИЯ ДАННЫХ В БАЗУ */
-    //из полученных вводных данных в полях приложения
-    //собираем Объект типа Item
-    //и возвращаем уже готовый объект Item
+    private fun updateItem(item: Item) {
+        viewModelScope.launch {
+            repository.updateRepo(item)
+        }
+    }
+    fun retrieveItem(id: Int): LiveData<Item> {
+        return repository.getItemRepo(id).asLiveData()
+    }
+
+    fun deleteItem(item: Item) {
+        viewModelScope.launch {
+            repository.deleteRepo(item)
+        }
+    }
+
+    fun sellItem(item: Item) {
+        if (item.quantityInStock > 0) {
+            // Decrease the quantity by 1
+            val newItem = item.copy(quantityInStock = item.quantityInStock - 1)
+            updateItem(newItem)
+        }
+    }
+    fun isStockAvailable(item: Item): Boolean {
+        return (item.quantityInStock > 0)
+    }
+
+
     private fun getNewItemEntry(
         itemName: String,
         itemPrice: String,
@@ -35,27 +58,33 @@ class InventoryViewModel @Inject constructor(
         )
     }
 
-    //имея вводные данные, через getNewItemEntry()
-    //собираем, возвращаем готовый объект Item
-    //и после вносим его в базу данных
     fun addNewItem(
         itemName: String,
         itemPrice: String,
         itemCount: String
     ) {
-        val newItem = getNewItemEntry(itemName, itemPrice, itemCount)
+        val newItem = getNewItemEntry(
+            itemName,
+            itemPrice,
+            itemCount
+        )
         insertItem(newItem)
     }
 
-    fun isEntryValid(itemName: String, itemPrice: String, itemCount: String): Boolean {
-        if (itemName.isBlank() || itemPrice.isBlank() || itemCount.isBlank()) {
+    fun isEntryValid(
+        itemName: String,
+        itemPrice: String,
+        itemCount: String): Boolean {
+
+        if (
+            itemName.isBlank() ||
+            itemPrice.isBlank() ||
+            itemCount.isBlank()) {
             return false
         }
         return true
     }
 
-    fun retrieveItem(id: Int): LiveData<Item> {
-        return repository.getItemRepo(id).asLiveData()
-    }
+
 
 }

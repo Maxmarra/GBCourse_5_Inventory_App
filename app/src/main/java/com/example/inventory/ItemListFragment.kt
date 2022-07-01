@@ -13,10 +13,6 @@ import com.example.inventory.adapter.ItemListAdapter
 import com.example.inventory.data.InventoryViewModel
 import com.example.inventory.databinding.FragmentItemListBinding
 
-
-/**
- * Main fragment displaying details for all items in the database.
- */
 class ItemListFragment : Fragment() {
 
     private val viewModel:InventoryViewModel by activityViewModels()
@@ -36,6 +32,7 @@ class ItemListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //here onClick() on listItem
         val adapter = ItemListAdapter {
             val action = ItemListFragmentDirections
                 .actionItemListFragmentToItemDetailFragment(it.id)
@@ -50,8 +47,10 @@ class ItemListFragment : Fragment() {
         }
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
+
         binding.floatingActionButton.setOnClickListener {
-            val action = ItemListFragmentDirections.actionItemListFragmentToAddItemFragment(
+            val action = ItemListFragmentDirections
+                .actionItemListFragmentToAddItemFragment(
                 getString(R.string.add_fragment_title)
             )
             this.findNavController().navigate(action)

@@ -15,22 +15,12 @@ import com.example.inventory.data.InventoryViewModel
 import com.example.inventory.data.Item
 import com.example.inventory.databinding.FragmentAddItemBinding
 
-/**
- * Fragment to add or update an item in the Inventory database.
- */
-
-
 class AddItemFragment : Fragment() {
 
     private val navigationArgs: ItemDetailFragmentArgs by navArgs()
-
     private val viewModel:InventoryViewModel by activityViewModels()
-
     lateinit var item: Item
 
-    // Binding object instance corresponding to the fragment_add_item.xml layout
-    // This property is non-null between the onCreateView() and onDestroyView() lifecycle callbacks,
-    // when the view hierarchy is attached to the fragment
     private var _binding: FragmentAddItemBinding? = null
     private val binding get() = _binding!!
 
@@ -52,7 +42,7 @@ class AddItemFragment : Fragment() {
     }
 
     //Эти методы делаем во фрагменте
-    //потому что идет полученние данных их xml!
+    //потому что идет полученние данных из xml!
     //проверяем чтобы не было пустых полей
     private fun isEntryValid(): Boolean {
         return viewModel.isEntryValid(
@@ -76,9 +66,6 @@ class AddItemFragment : Fragment() {
         }
     }
 
-    /**
-     * Called before fragment is destroyed.
-     */
     override fun onDestroyView() {
         super.onDestroyView()
         // Hide keyboard.
