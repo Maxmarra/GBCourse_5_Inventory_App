@@ -42,25 +42,23 @@ class AddItemFragment : Fragment() {
         return binding.root
     }
 
-
-
     //проверяем что поля заполнены
-    private fun isEntryValid(): Boolean {
-        return viewModel.isEntryValid(
-            binding.itemName.text.toString(),
-            binding.itemPrice.text.toString(),
-            binding.itemCount.text.toString()
-        )
-    }
+//    private fun isEntryValid(): Boolean {
+//        return viewModel.isEntryValid(
+//            binding.itemName.text.toString(),
+//            binding.itemPrice.text.toString(),
+//            binding.itemCount.text.toString()
+//        )
+//    }
 
     private fun addNewItem() {
-        if (isEntryValid()) {
+        //if (isEntryValid()) {
             viewModel.addNewItem(
                 binding.itemName.text.toString(),
                 binding.itemPrice.text.toString(),
                 binding.itemCount.text.toString(),
             )
-        }
+        //}
 
         val action = AddItemFragmentDirections.actionAddItemFragmentToItemListFragment()
         findNavController().navigate(action)
