@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.inventory.data.*
 import com.example.inventory.databinding.FragmentItemDetailBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -15,10 +17,19 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
  * [ItemDetailFragment] displays the details of the selected item.
  */
 class ItemDetailFragment : Fragment() {
+
     private val navigationArgs: ItemDetailFragmentArgs by navArgs()
 
+    private val viewModel: InventoryViewModel by activityViewModels {
+        InventoryViewModelFactory(
+            (activity?.application as InventoryApplication).database.itemDao()
+        )
+    }
     private var _binding: FragmentItemDetailBinding? = null
     private val binding get() = _binding!!
+
+    lateinit var item: Item
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,8 +40,52 @@ class ItemDetailFragment : Fragment() {
         return binding.root
     }
 
-    /**
-     * Displays an alert dialog to get the user's confirmation before deleting the item.
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val id = navigationArgs.itemId
+
+        viewModel.retrieveItem(id).observe(this.viewLifecycleOwner) {
+                selectedItem ->
+            item = selectedItem
+            bind(item)
+        }
+    }
+
+    /* TODO
+        создай метод bind() принимающий Item
+        его задача связать поля xml файла со значениями
+        переданного объекта
+        то есть полю itemName.text нужно присвоить значение из объекта item
+        -> item.itemName и так для трех полей + установить
+        OnClickListenerы на две кнопки
+        используй binding.apply{} чтобы не повторять слово binding 5 раз
+     */
+    private fun bind(item: Item) {
+        binding.apply {
+            itemName.text = item.itemName
+            itemPrice.text = item.getFormattedPrice()
+            itemCount.text = item.quantityInStock.toString()
+
+            // присвой кнопке sellItem значение isEnabled
+            // как результат работы метода isStockAvailable()
+            sellItem.isEnabled = viewModel.isStockAvailable(item)
+
+            //установи на кнопку sellItem setOnClickListener и передай в него
+            //метод продажи единицы товара sellItem()
+            sellItem.setOnClickListener { viewModel.sellItem(item) }
+
+            //установи на кнопку deleteItem setOnClickListener
+            //и передай в него метод вывода диалогового окна
+            // showConfirmationDialog()
+            deleteItem.setOnClickListener { showConfirmationDialog() }
+        }
+    }
+
+    /* TODO
+        создай метод showConfirmationDialog()
+        его задача показать окно с просьбой подтвердить или
+        отменить удаления item
+        при подтверждении -> применить метод deleteItem()
      */
     private fun showConfirmationDialog() {
         MaterialAlertDialogBuilder(requireContext())
@@ -43,17 +98,18 @@ class ItemDetailFragment : Fragment() {
             }
             .show()
     }
-
-    /**
-     * Deletes the current item and navigates to the list fragment.
-     */
+    /*TODO
+        создай метод deleteItem()
+        его задача вызвать соответствующий метод у viewModel
+        который удалит item из базы и после это
+        сделает навигацию, вернувшись назад к списку items
+        через метод findNavController().navigateUp()
+    * */
     private fun deleteItem() {
+        viewModel.deleteItem(item)
         findNavController().navigateUp()
     }
 
-    /**
-     * Called when fragment is destroyed.
-     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

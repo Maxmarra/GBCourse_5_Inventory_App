@@ -46,6 +46,19 @@ class ItemListFragment : Fragment() {
             this.findNavController().navigate(action)
         }
         binding.recyclerView.adapter = adapter
+        /*TODO
+           отследи изменения в списке если вдруг в него добавили или удалили
+           какой-то объект
+           повесь слушатель на allItems
+           назначь ЭТОТ фрагмент viewLifecycleOwner
+           вызови у всех элементов метод let{} для работы
+           только с ненулабельными значениями
+           и у ОБЪЕКТА  ItemListAdapter вызови метод submitList()
+           передав в него весь список через it
+           submitList() это метод идущий в связке с ListAdapter
+           он проверяет и после обновляет ТОЛЬКО изменные части списка
+           а не переписывает заново весь список
+           */
 
         viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
             items.let {

@@ -29,7 +29,6 @@ class AddItemFragment : Fragment() {
 
     lateinit var item: Item
 
-
     private var _binding: FragmentAddItemBinding? = null
     private val binding get() = _binding!!
 
