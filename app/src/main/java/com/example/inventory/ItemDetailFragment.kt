@@ -20,11 +20,15 @@ class ItemDetailFragment : Fragment() {
 
     private val navigationArgs: ItemDetailFragmentArgs by navArgs()
 
+/* TODO
+     Создай объект viewModel через InventoryViewModelFactory(
+     (activity?.application as InventoryApplication).database.itemDao()) */
     private val viewModel: InventoryViewModel by activityViewModels {
         InventoryViewModelFactory(
             (activity?.application as InventoryApplication).database.itemDao()
         )
     }
+
     private var _binding: FragmentItemDetailBinding? = null
     private val binding get() = _binding!!
 
@@ -39,26 +43,39 @@ class ItemDetailFragment : Fragment() {
         _binding = FragmentItemDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
-
+    /* TODO
+        Переопредели onViewCreated() если его тут нет */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val id = navigationArgs.itemId
+    /* TODO
+        создай переменную id принимающую значение из переданного
+        аргумента из  ItemListFragment
+        используй navigationArgs. Имя аргумента находится в nav_graph.xml
+        */
 
+        val id = navigationArgs.itemId
+    /* TODO
+        через viewModel вызови метод получения объекта по id
+        и повесь на него обзервер
+        полученный объект it присвой lateinit item из класса ItemDetailFragment
+        и передай его в метод bind() чтобы заполнить поля xml файла
+        данными по этому объекту */
         viewModel.retrieveItem(id).observe(this.viewLifecycleOwner) {
-                selectedItem ->
-            item = selectedItem
+            item = it
             bind(item)
         }
     }
 
     /* TODO
         создай метод bind() принимающий Item
-        его задача связать поля xml файла со значениями
-        переданного объекта
+        его задача связать поля xml файла со значениями переданного объекта
         то есть полю itemName.text нужно присвоить значение из объекта item
         -> item.itemName и так для трех полей + установить
         OnClickListenerы на две кнопки
         используй binding.apply{} чтобы не повторять слово binding 5 раз
+        не забудь преобразовывать поля ОБЪЕКТА item в тип String!
+        если они имею какой-либо другой формат
+        у цены вызывай extention метод - он уже возвращает строку
      */
     private fun bind(item: Item) {
         binding.apply {
