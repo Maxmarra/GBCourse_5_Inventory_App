@@ -82,19 +82,26 @@ class ItemDetailFragment : Fragment() {
             itemName.text = item.itemName
             itemPrice.text = item.getFormattedPrice()
             itemCount.text = item.quantityInStock.toString()
-
-            // присвой кнопке sellItem значение isEnabled
-            // как результат работы метода isStockAvailable()
+            /*TODO
+               присвой кнопке sellItem значение isEnabled
+               как результат работы метода isStockAvailable() */
             sellItem.isEnabled = viewModel.isStockAvailable(item)
 
-            //установи на кнопку sellItem setOnClickListener и передай в него
-            //метод продажи единицы товара sellItem()
+            /*TODO
+               установи на кнопку sellItem setOnClickListener и передай в него
+               метод продажи единицы товара sellItem()
+            */
             sellItem.setOnClickListener { viewModel.sellItem(item) }
 
-            //установи на кнопку deleteItem setOnClickListener
-            //и передай в него метод вывода диалогового окна
-            // showConfirmationDialog()
+            /*TODO установи на кнопку deleteItem setOnClickListener
+               и передай в него метод вывода диалогового окна
+               showConfirmationDialog() */
             deleteItem.setOnClickListener { showConfirmationDialog() }
+
+            /* TODO
+                установи на FAB кнопку editItem setOnClickListener
+                и вызови метод editItem() */
+            editItem.setOnClickListener { editItem() }
         }
     }
 
@@ -120,11 +127,29 @@ class ItemDetailFragment : Fragment() {
         его задача вызвать соответствующий метод у viewModel
         который удалит item из базы и после это
         сделает навигацию, вернувшись назад к списку items
-        через метод findNavController().navigateUp()
-    * */
+        через метод findNavController().navigateUp() */
     private fun deleteItem() {
         viewModel.deleteItem(item)
         findNavController().navigateUp()
+    }
+    /*TODO
+        создай метод editItem()
+        его задача при нажатии на кнопку "редактировать элемент"
+        перейти на страницу ДОБАВЛЕНИЯ элемента
+        но со своим заголовком EDIT ITEM
+        и вторым аргументом id
+        через который страница добавления заполнится
+        существующими данными этого элемента
+        создать перменную action и через ItemDetailFragmentDirections
+        передать два аргумента - заголовок(EDIT ITEM) и item.id
+        плюс совершить навигацию
+        через метод findNavController().navigateUp() */
+    private fun editItem() {
+        val action = ItemDetailFragmentDirections.actionItemDetailFragmentToAddItemFragment(
+            getString(R.string.edit_fragment_title),
+            item.id
+        )
+        this.findNavController().navigate(action)
     }
 
     override fun onDestroyView() {
