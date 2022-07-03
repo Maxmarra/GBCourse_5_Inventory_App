@@ -114,6 +114,26 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
             itemDao.deleteDao(item)
         }
     }
+    /* TODO
+        Создай метод getUpdatedItemEntry() принимающий в качестве
+        параметров itemId: Int, itemName: String,
+        itemPrice: String, itemCount: String
+        Его задача создать(собрать) новый объект Item на основе введенных
+        параметров приведя их в соответствие с типами класса Item
+        этот объект пойдет в базу, поэтому все поля нужно привести к типам
+        в соответствие с полями класса Item
+        после необходимо добавить этот объект в базу с помощью готового
+        метода insertItem()*/
+    fun updateItem(itemId: Int, itemName: String, itemPrice: String, itemCount: String
+    ) {
+        val updatedItem  = Item(
+            id = itemId,
+            itemName = itemName,
+            itemPrice = itemPrice.toDouble(),
+            quantityInStock = itemCount.toInt())
+        updateItem(updatedItem)
+    }
+
 }
     /*TODO
          Создай класс InventoryViewModelFactory() принимающий объект
