@@ -4,7 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-
+/*
+TODO(3)
+ - создай базу данных
+*/
 /**
  *  Set the version as 1.
          * Whenever you change the schema of the database table,

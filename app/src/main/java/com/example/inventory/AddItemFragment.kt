@@ -18,13 +18,22 @@ class AddItemFragment : Fragment() {
 
     private val navigationArgs: ItemDetailFragmentArgs by navArgs()
 
+    /*
+    TODO(8)
+         Создай объект viewModel через InventoryViewModelFactory(
+         (activity?.application as InventoryApplication).database.itemDao())
+     */
     private val viewModel: InventoryViewModel by activityViewModels {
         InventoryViewModelFactory(
             (activity?.application as InventoryApplication).database
                 .itemDao()
         )
     }
-
+    /*
+    TODO(9)
+         Создай переменную lateinit var item: Item для использования
+         в связывании и наполнении файла xml
+     */
     lateinit var item: Item
 
     private var _binding: FragmentAddItemBinding? = null
@@ -38,8 +47,14 @@ class AddItemFragment : Fragment() {
         _binding = FragmentAddItemBinding.inflate(inflater, container, false)
         return binding.root
     }
-
-    //проверяем что поля заполнены
+    /*
+    TODO(11)
+         Создай метод isEntryValid(): Boolean
+         его задача через метод isEntryValid() лежащий во viewModel
+         проверить что все поля xml файла заполнены(не пустые)
+         используем binding и не забываем все приводить к строке
+         так как этот метод во вьюмодел принимает только строки
+    */
     private fun isEntryValid(): Boolean {
         return viewModel.isEntryValid(
             binding.itemName.text.toString(),
@@ -47,7 +62,18 @@ class AddItemFragment : Fragment() {
             binding.itemCount.text.toString()
         )
     }
-
+    /*
+        TODO(12)
+             Создай метод addNewItem()
+             его задача через метод addNewItem() лежащий во viewModel
+             добавить все значения объекта Item в базу
+             - через if проверяем что все поля валидные и
+             - используем binding и не забываем все приводить к строке
+             так как этот метод во вьюмодел принимает только строки
+             он сам потом приведет поля объекта в соответствующие типы
+             - после добавления соверши навигацию через AddItemFragmentDirections
+             к списку всех объектов
+        */
     private fun addNewItem() {
         if (isEntryValid()) {
             viewModel.addNewItem(
@@ -121,6 +147,11 @@ class AddItemFragment : Fragment() {
                 bind(item)
             }
         } else {
+            /*
+            TODO(13)
+             повесь OnClickListener на кнопку сохранить
+             и передай в него метод добавления объекта
+            */
             binding.saveAction.setOnClickListener {
                 addNewItem()
             }

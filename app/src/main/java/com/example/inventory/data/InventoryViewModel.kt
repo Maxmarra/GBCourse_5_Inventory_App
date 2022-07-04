@@ -3,6 +3,11 @@ package com.example.inventory.data
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 
+/*
+TODO(4)
+ - создай InventoryViewModel и передай в нее объект ItemDao
+*/
+
 class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
 
     //To consume the data as a LiveData value, use the asLiveData() function
@@ -37,7 +42,8 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
             itemDao.updateDao(item)
         }
     }
-    /* TODO
+    /*
+    TODO(6)
         Создай метод insertItem() принимающий Item в качестве
         параметра и через viewModelScope.launch вызывающий
         соответствующий метод у объекта itemDao
@@ -48,7 +54,8 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
             itemDao.insertDao(item)
         }
     }
-    /* TODO
+    /*
+    TODO(10)
         Создай метод isEntryValid() принимающий в качестве
         параметров itemName: String, itemPrice: String, itemCount: String
         и возращающий Boolean
@@ -62,7 +69,8 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
         }
         return true
     }
-    /* TODO
+    /*
+    TODO(7)
         Создай метод addNewItem() принимающий в качестве
         параметров itemName: String, itemPrice: String, itemCount: String
         Его задача создать(собрать) новый объект Item на основе введенных
@@ -135,7 +143,8 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
     }
 
 }
-    /*TODO
+    /*
+    TODO(5)
          Создай класс InventoryViewModelFactory() принимающий объект
          ItemDao и наследующийся от ViewModelProvider.Factory
          Данный класс инициализирует для нас объект InventoryViewModel
