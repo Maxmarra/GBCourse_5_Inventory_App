@@ -9,7 +9,6 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.inventory.databinding.FragmentAddItemBinding
-
 /**
  * Fragment to add or update an item in the Inventory database.
  */
