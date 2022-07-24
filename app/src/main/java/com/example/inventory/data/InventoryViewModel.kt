@@ -2,6 +2,7 @@ package com.example.inventory.data
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import java.text.NumberFormat
 
 class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
 

@@ -11,11 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.inventory.data.InventoryApplication
-import com.example.inventory.data.InventoryViewModel
-import com.example.inventory.data.InventoryViewModelFactory
-import com.example.inventory.data.Item
+import com.example.inventory.data.*
 import com.example.inventory.databinding.FragmentAddItemBinding
+import java.text.NumberFormat
 
 /**
  * Fragment to add or update an item in the Inventory database.
@@ -64,10 +62,11 @@ class AddItemFragment : Fragment() {
     }
 
     private fun bind(item: Item) {
-        val price = "%,2f".format(item.itemPrice)
+        //val price = "%,.2f".format(item.itemPrice)
+        //val price = NumberFormat.getCurrencyInstance().format(item.itemPrice)
         binding.apply {
             itemName.setText(item.itemName, TextView.BufferType.SPANNABLE)
-            itemPrice.setText(price, TextView.BufferType.SPANNABLE)
+            itemPrice.setText(item.itemPrice.toString(), TextView.BufferType.SPANNABLE)
             itemCount.setText(item.quantityInStock.toString(), TextView.BufferType.SPANNABLE)
 
             saveAction.setOnClickListener { updateItem() }
