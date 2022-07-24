@@ -41,23 +41,19 @@ class ItemListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ItemListAdapter {}
-        binding.recyclerView.adapter = adapter
-
-        viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
-            items.let {
-                adapter.submitList(it)
-            }
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            viewmodel = viewModel
+            itemListFragment = this@ItemListFragment
+            recyclerView.adapter = ItemListAdapter{}
         }
+    }
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
-
-        binding.floatingActionButton.setOnClickListener {
-            val action = ItemListFragmentDirections
-                .actionItemListFragmentToAddItemFragment(
+    fun onFabClick(){
+        val action = ItemListFragmentDirections
+            .actionItemListFragmentToAddItemFragment(
                 getString(R.string.add_fragment_title)
             )
-            this.findNavController().navigate(action)
-        }
+        this.findNavController().navigate(action)
     }
 }
