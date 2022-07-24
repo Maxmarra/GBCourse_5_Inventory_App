@@ -7,10 +7,52 @@ class InventoryViewModel(private val itemDao: ItemDao) : ViewModel() {
 
     val allItems: LiveData<List<Item>> = itemDao.getItemsDao().asLiveData()
 
+    fun retrieveItem(id: Int): LiveData<Item> {
+        return itemDao.getItemDao(id).asLiveData()
+    }
+
     private fun insertItem(item: Item) {
         viewModelScope.launch {
             itemDao.insertDao(item)
         }
+    }
+
+    private fun updateItem(item: Item) {
+        viewModelScope.launch {
+            itemDao.updateDao(item)
+        }
+    }
+
+    fun deleteItem(item: Item) {
+        viewModelScope.launch {
+            itemDao.deleteDao(item)
+        }
+    }
+
+    fun sellItem(item: Item) {
+        if (item.quantityInStock > 0) {
+            // Decrease the quantity by 1
+            val newItem = item.copy(quantityInStock = item.quantityInStock - 1)
+            updateItem(newItem)
+        }
+    }
+    fun isStockAvailable(item: Item): Boolean {
+        return (item.quantityInStock > 0)
+    }
+
+    fun updateItem(
+        itemId: Int,
+        itemName: String,
+        itemPrice: String,
+        itemCount: String
+    ) {
+        val updatedItem = Item(
+            id = itemId,
+            itemName = itemName,
+            itemPrice = itemPrice.toDouble(),
+            quantityInStock = itemCount.toInt()
+        )
+        updateItem(updatedItem)
     }
 /* ЭМУЛЯЦИЯ ПОЛУЧЕНИЯ И ДОБАВЛЕНИЯ ДАННЫХ В БАЗУ */
     //из полученных вводных данных в полях приложения

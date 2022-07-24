@@ -45,7 +45,12 @@ class ItemListFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             viewmodel = viewModel
             itemListFragment = this@ItemListFragment
-            recyclerView.adapter = ItemListAdapter{}
+            recyclerView.adapter = ItemListAdapter{
+                val action =
+                    ItemListFragmentDirections
+                        .actionItemListFragmentToItemDetailFragment(it.id)
+                findNavController().navigate(action)
+            }
         }
     }
 
