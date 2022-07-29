@@ -15,6 +15,8 @@ import com.example.inventory.data.InventoryViewModel
 import com.example.inventory.data.Item
 import com.example.inventory.databinding.FragmentAddItemBinding
 
+// БЕЗ EDIT И UPDATE!!!
+
 class AddItemFragment : Fragment() {
 
     private val navigationArgs: ItemDetailFragmentArgs by navArgs()
